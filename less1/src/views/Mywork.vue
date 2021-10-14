@@ -68,7 +68,12 @@ export default {
                             num = (a - a % b) / b;
                             break;
                     }
-                    this.result = num;
+                    if(isNaN(num)){
+                        this.comm = 'Введите все корректные данные!';
+                    }else{
+                        this.result = num;
+                    }
+                    
                 }
             }else{
                 this.comm = 'Введите все корректные данные!';
