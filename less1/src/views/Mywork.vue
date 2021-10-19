@@ -79,7 +79,6 @@ export default {
                 this.comm = 'Введите все корректные данные!';
             }
         }
-
     }
 };
 </script>

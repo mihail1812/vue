@@ -3,10 +3,14 @@
         <h1 class="less2__heading">Калькулятор урока 2</h1>
 
         <input v-model.number="operand1"
-        
+        @keyup="sync(operand1)"
+        @click="changePick('1')"
         />
         {{action}}
-        <input v-model.number="operand2"/>
+        <input v-model.number="operand2"
+        @keyup="sync(operand2)"
+        @click="changePick('2')"
+        />
         = {{result}} <br>
 
         <div class="less2__comment" v-if="comm">
@@ -36,14 +40,14 @@
                     {{item}}
                     </button>
 
-                    <button class="less2__arrow"><img src="arrow.png" alt="arrow"></button><br>
+                    <button class="less2__arrow" @click="backNum()"><img src="arrow.png" alt="arrow"></button><br>
                 </div>
 
                 <div class="less2__operands">
                     <input type="radio" name="oper1" id="oper1" value="1" v-model="pick">
                     <label for="oper1">операнд 1</label>
                     <input type="radio" name="oper2" id="oper2" value="2" v-model="pick">
-                    <label for="oper2">операнд 1</label>
+                    <label for="oper2">операнд 2</label>
                 </div>
             </div>
             
@@ -136,6 +140,28 @@ export default {
                 this.operand2 = Number(el.join(''));
             }
         },
+        sync(op){
+            if (op === this.operand1){
+                this.arr1 = [];
+                this.arr1 = String(op).split("");
+            }else{
+                this.arr2 = [];
+                this.arr2 = String(op).split("");
+            }
+        },
+        changePick(el){
+            this.pick = el;
+            
+        },
+        backNum(){
+            if (this.pick == "1"){
+                this.arr1.pop();
+                this.addToOper(this.arr1);
+            }else{
+                this.arr2.pop();
+                this.addToOper(this.arr2);
+            }
+        }
         
 
     }
