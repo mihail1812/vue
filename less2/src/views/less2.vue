@@ -2,7 +2,9 @@
     <div class="less2">
         <h1 class="less2__heading">Калькулятор урока 2</h1>
 
-        <input v-model.number="operand1"/>
+        <input v-model.number="operand1"
+        
+        />
         {{action}}
         <input v-model.number="operand2"/>
         = {{result}} <br>
@@ -67,7 +69,9 @@ export default {
             pick: "1",
             actionArr: ['+', '-', '*', '/', '**'],
             nums: [0,1,2,3,4,5,6,7,8,9],
-            logs: {}
+            logs: {},
+            arr1: [],
+            arr2: []
 
         }
     },
@@ -117,9 +121,22 @@ export default {
         },
         addNum(num){
             if(this.pick === "1"){
-                
+                this.arr1.push(num);
+                this.addToOper(this.arr1);
+            }else{
+                this.arr2.push(num);
+                this.addToOper(this.arr2);
             }
-        }
+        },
+        addToOper(el){
+            if (this.pick === "1"){
+                this.operand1 = Number(el.join(''));
+                
+            }else{
+                this.operand2 = Number(el.join(''));
+            }
+        },
+        
 
     }
 }
