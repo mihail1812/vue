@@ -4,6 +4,7 @@
     <div class="container">
       <header class="costs__header">
         <h1 class="costs__heading">My personal costs</h1>
+        <h2 class="costs__total">Total value: {{ getFPV }}</h2>
       </header>
       <div class="costs__add">
         <button class="costs__add-btn" @click="showForm(btnadd)">{{btnadd}}</button>
@@ -11,10 +12,12 @@
       </div>
       <div class="costs__box">
         <div class="costs__list">
-            <PaymentsDisplay :items="paymentsList" />
+            <PaymentsDisplay :items="currentEl" />
+            <pagination @paginate="changePage" :length="paymentList.length" :cur="page" :n="count"/>
         </div>
         <div class="costs__scheme">
           <h2>Тут будет схема-график</h2>
+          {{paymentList}}
         </div>
       </div>
     </div>
@@ -24,41 +27,43 @@
 <script>
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import AddPaymentForm from "../components/AddPaymentForm.vue";
+import { mapMutations, mapGetters} from 'vuex';
+import Pagination from '../components/Pagination.vue';
+
 
 export default {
   name: "Costs",
   components: {
     PaymentsDisplay,
     AddPaymentForm,
+    Pagination,
   },
   data() {
     return {
-      paymentsList: [],
-      btnadd: "ADD NEW COSTS +"
+      btnadd: "ADD NEW COSTS +",
+      page: 1,
+      count: 3
     };
   },
-  methods: {
-    fetchData() {
-      return [
-        {
-          date: "28.03.2020",
-          category: "Food",
-          value: 169,
-        },
-        {
-          date: "24.03.2020",
-          category: "Transport",
-          value: 360,
-        },
-        {
-          date: "24.03.2020",
-          category: "Food",
-          value: 532,
-        },
-      ];
+  computed: {
+    ...mapGetters({
+      paymentList:'getPaymentsList',
+    }),
+    getFPV(){
+      return this.$store.getters.getFullPaymentValue
     },
+    currentEl(){
+      const {count, page} = this;
+      return this.paymentList.slice(count*(page-1), count*(page-1)+count)
+    }
+  },
+  methods: {
+    ...mapMutations({
+      myMutationName: 'setPaymentsListData',
+      addData: 'addPaymentListData'
+      }),
     addNewPayment(data) {
-      this.paymentsList = [...this.paymentsList, data];
+      this.addData(data);
     },
     openForm(){
         const form = document.querySelector('.add');
@@ -81,10 +86,20 @@ export default {
             this.btnadd = "ADD NEW COSTS +";
         }
     },
+    changePage(p){
+      this.page = p;
+    }
   },
   created() {
-    this.paymentsList = this.fetchData();
+    //this.$store.commit('setPaymentListData', this.fetchData());
+    //this.paymentsList = this.fetchData();
+    //this.myMutationName(this.fetchData())
+    this.$store.dispatch('fetchData');
   },
+  mounted () {
+    
+  }
+
 };
 </script>
 

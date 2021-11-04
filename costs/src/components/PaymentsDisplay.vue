@@ -14,13 +14,12 @@
         <div class="disp__item">{{ item.value }}</div>
       </div>
     </div>
-    <div class="disp__pagination">Пагинация</div>
   </div>
 </template>
 
 <script>
 export default {
-  //name: 'PaymentsDisplay',
+  name: 'PaymentsDisplay',
   props: {
     items: {
       type: Array,

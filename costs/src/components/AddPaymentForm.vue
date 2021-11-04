@@ -1,6 +1,6 @@
 <template>
   <div class="add">
-    <input class="add__input" placeholder="Category" v-model="category" />
+    <select-category class="add__input" v-model="category"/>
     <input class="add__input" placeholder="Date" v-model="date" />
     <input class="add__input" placeholder="Value" v-model="value" />
     <button class="add__btn" @click="onSaveClick">ADD +</button>
@@ -8,7 +8,9 @@
 </template>
 
 <script>
+import SelectCategory from './SelectCategory.vue';
 export default {
+  components: { SelectCategory },
   data() {
     return {
       category: "",
@@ -30,7 +32,7 @@ export default {
       const data = {
         category: this.category,
         date: this.date || this.getCurrentDate,
-        value: this.value,
+        value: Number(this.value),
       };
       this.$emit("addNewPayment", data);
       this.category = "";
