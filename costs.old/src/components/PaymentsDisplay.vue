@@ -7,8 +7,8 @@
       <div class="disp__header-item">Value</div>
     </div>
     <div class="disp__box">
-      <div class="disp__row" v-for="(item) in items" v-bind:key="item.id">
-        <div class="disp__item">{{ item.id }}</div>
+      <div class="disp__row" v-for="(item, id) in items" v-bind:key="id">
+        <div class="disp__item">{{ id+1 }}</div>
         <div class="disp__item">{{ item.date }}</div>
         <div class="disp__item">{{ item.category }}</div>
         <div class="disp__item">{{ item.value }}</div>

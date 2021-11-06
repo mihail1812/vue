@@ -13,11 +13,7 @@
       <div class="costs__box">
         <div class="costs__list">
             <PaymentsDisplay :items="currentEl" />
-            <pagination 
-              @paginate="changePage" 
-              :length="30" 
-              :cur="page" 
-              :n="count"/>
+            <pagination @paginate="changePage" :length="paymentList.length" :cur="page" :n="count"/>
         </div>
         <div class="costs__scheme">
           <h2>Тут будет схема-график</h2>
@@ -46,7 +42,7 @@ export default {
     return {
       btnadd: "ADD NEW COSTS +",
       page: 1,
-      count: 5,
+      count: 3,
     };
   },
   computed: {
@@ -92,14 +88,13 @@ export default {
     },
     changePage(p){
       this.page = p;
-      this.$store.dispatch('fetchData', this.page);
     },
   },
   created() {
     //this.$store.commit('setPaymentListData', this.fetchData());
     //this.paymentsList = this.fetchData();
     //this.myMutationName(this.fetchData())
-    this.$store.dispatch('fetchData', this.page);
+    this.$store.dispatch('fetchData');
   },
   mounted () {
 
