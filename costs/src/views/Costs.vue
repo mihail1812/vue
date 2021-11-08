@@ -8,6 +8,7 @@
       </header>
       <div class="costs__add">
         <button class="costs__add-btn" @click="showForm(btnadd)">{{btnadd}}</button>
+        <quick-add/>
         <AddPaymentForm @addNewPayment="addNewPayment" />
       </div>
       <div class="costs__box">
@@ -33,6 +34,7 @@ import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import AddPaymentForm from "../components/AddPaymentForm.vue";
 import { mapMutations, mapGetters} from 'vuex';
 import Pagination from '../components/Pagination.vue';
+import QuickAdd from '../components/QuickAdd.vue';
 
 
 export default {
@@ -41,6 +43,7 @@ export default {
     PaymentsDisplay,
     AddPaymentForm,
     Pagination,
+    QuickAdd,
   },
   data() {
     return {
@@ -128,6 +131,7 @@ export default {
       position: relative;
   }
   &__add-btn {
+      margin: 0 4px;
       padding: 8px;
       width: 160px;
       color: #fff;

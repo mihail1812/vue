@@ -22,6 +22,11 @@ const routes = [
     path: '/costs',
     name: 'Costs',
     component: () => import(/* webpackChunkName: "about" */ '../views/Costs.vue')
+  },
+  {
+    path: '/costs/AddPaymentForm',
+    name: 'AddPaymentForm', 
+    component: () => import(/* webpackChunkName: "about" */ '../components/AddPaymentForm.vue')
   }
 ]
 
