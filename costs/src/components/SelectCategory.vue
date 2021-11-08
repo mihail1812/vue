@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <select :value="value" @change="onChange($event)">
+    <select class="select__input" :value="value" @change="onChange($event)">
       <option
         v-for="(option, idx) in getCategoryList"
         :key="idx">
@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       selected: "",
+      option: "Food",
     };
   },
   computed: {
@@ -41,5 +42,11 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.select {
+  &__input {
+    padding: 8px;
+    width: 250px;
+  }
+}
 </style>
