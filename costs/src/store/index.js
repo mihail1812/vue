@@ -196,12 +196,19 @@ export default new Vuex.Store({
         paymentsList: [],
         paymentsListIDS: [],
         categoryList: [],
+        //new
+        lastId: '', //последний id
+        lastArrCount: '' // количество элементов в последнем массиве расходов
     },
     mutations: {
-        setPaymentsListData(state, payload) {
+        addPaymentListData(state, payload) {
             state.paymentsList = payload
         },
-        addPaymentListData(state, payload) {
+        addLastId(state, payload){
+            state.lastId = payload
+        },
+        setPaymentListData(state, payload) {
+            console.log(payload, 'payload');
             const newUnicObj = payload.filter(obj=>{
                 return state.paymentsListIDS.indexOf(obj.id) < 0
             });
@@ -225,7 +232,7 @@ export default new Vuex.Store({
                     }, 1000)
                 })
                 .then(res => {
-                    commit('addPaymentListData', res)
+                    commit('setPaymentListData', res)
                 })
         },
         loadCategories({ commit }) {

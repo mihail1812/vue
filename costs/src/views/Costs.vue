@@ -7,10 +7,10 @@
         <h2 class="costs__total">Total value: {{ getFPV }}</h2>
       </header>
       <div class="costs__add">
-        <router-link class="costs__add-btn" to="costs/add">{{btnadd}}</router-link>
-        <!-- <button class="costs__add-btn" @click="showForm(btnadd)">{{btnadd}}</button> -->
+        <!-- <router-link class="costs__add-btn" to="costs/add">{{btnadd}}</router-link> -->
+        <button class="costs__add-btn" @click="showForm(btnadd)">{{btnadd}}</button>
         <quick-add/>
-        <!-- <AddPaymentForm @addNewPayment="addNewPayment" /> -->
+        <AddPaymentForm @addNewPayment="addNewPayment" />
         
       </div>
       <router-view/>
@@ -34,7 +34,7 @@
 
 <script>
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
-//import AddPaymentForm from "../components/AddPaymentForm.vue";
+import AddPaymentForm from "../components/AddPaymentForm.vue";
 import { mapMutations, mapGetters} from 'vuex';
 import Pagination from '../components/Pagination.vue';
 import QuickAdd from '../components/QuickAdd.vue';
@@ -44,9 +44,9 @@ export default {
   name: "Costs",
   components: {
     PaymentsDisplay,
-    //AddPaymentForm,
+    AddPaymentForm,
     Pagination,
-    QuickAdd,
+    QuickAdd
   },
   data() {
     return {
@@ -73,6 +73,7 @@ export default {
       addData: 'addPaymentListData'
       }),
     addNewPayment(data) {
+      console.log(data);
       this.addData(data);
     },
     openForm(){
