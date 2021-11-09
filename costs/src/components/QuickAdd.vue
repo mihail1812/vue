@@ -3,6 +3,7 @@
     <button class="quick__btn" @click="quickAdd('Food', 200)">+ Food 200</button>
     <button class="quick__btn" @click="quickAdd('Transport', 50)">+ Transport 50</button>
     <button class="quick__btn" @click="quickAdd('Entertainment', 2000)">+ Entertainment 2000</button>
+    <button class="quick__btn" @click="quickAdd('Transport')">+ Transport </button>
   </div>
 </template>
 

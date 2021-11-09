@@ -8,7 +8,10 @@
       </header>
       <div class="costs__add">
         <!-- <router-link class="costs__add-btn" to="costs/add">{{btnadd}}</router-link> -->
-        <button class="costs__add-btn" @click="showForm(btnadd)">{{btnadd}}</button>
+        <button class="costs__add-btn" 
+        @click="showForm(btnadd)"
+        @btnChange="btnChange"
+        >{{btnadd}}</button>
         <quick-add/>
         <!-- <AddPaymentForm @addNewPayment="addNewPayment" /> -->
         
@@ -102,6 +105,10 @@ export default {
             this.btnadd = "ADD NEW COSTS +";
         }
     },
+    btnChange(){
+      console.log('change');
+      this.btnadd = "CLOSE FORM";
+    },
     changePage(p){
       this.page = p;
       this.$store.dispatch('fetchData', this.page);
@@ -119,6 +126,15 @@ export default {
     let formAdd = document.querySelector('.add');
     if(formAdd){
       this.btnadd = "CLOSE FORM"
+    }
+  },
+  updated(){
+    console.log('updated');
+    let formAdd = document.querySelector('.add');
+    if(formAdd){
+      this.btnadd = "CLOSE FORM"
+    }else{
+      this.btnadd = "ADD NEW COSTS +"
     }
   }
 

@@ -14,7 +14,7 @@ export default {
   components: { SelectCategory },
   data() {
     return {
-      category: "",
+      category: "Food",
       value: "",
       date: "",
     };
@@ -49,9 +49,6 @@ export default {
       //this.date = "";
       //this.value = "";
     },
-    quickAdd(obj){
-      console.log('qa', obj);
-    }
   },
   beforeRouteEnter(to, from, next) {
     // console.log("enter");
@@ -61,10 +58,10 @@ export default {
     // не забываем вызвать next()
     if (to.params.id) {
       //console.log(to.params.id);
-      if (to.query.value) {
+      if (to.query.value > 0) {
         console.log(to.query.value);
         next(obj =>{
-          //console.log('next',obj);
+          console.log('next',obj);
           obj.category = obj.$route.params.id;
           obj.value = obj.$route.query.value;
           obj.onSaveClick();
@@ -72,7 +69,9 @@ export default {
         })
       } else {
         next(obj =>{
+          console.log('222');
           obj.category = obj.$route.params.id;
+
         })
       }
     } else {
