@@ -196,25 +196,26 @@ export default new Vuex.Store({
         paymentsList: [],
         paymentsListIDS: [],
         categoryList: [],
-        //new
-        lastId: '', //последний id
-        lastArrCount: '' // количество элементов в последнем массиве расходов
+        lastId: ''
     },
     mutations: {
-        addPaymentListData(state, payload) {
+        setPaymentListData(state, payload) {
             state.paymentsList = payload
         },
-        addLastId(state, payload){
-            state.lastId = payload
-        },
-        setPaymentListData(state, payload) {
-            console.log(payload, 'payload');
-            const newUnicObj = payload.filter(obj=>{
-                return state.paymentsListIDS.indexOf(obj.id) < 0
-            });
-            const unicIDS = newUnicObj.map(obj=>obj.id)
-            state.paymentsListIDS.push(...unicIDS);
-            state.paymentsList.push(...newUnicObj);
+        addPaymentListData(state, payload) {
+            payload.forEach(function(obj){
+                let index = obj.id - 1;
+                if(!state.paymentsList[index]){
+                    Vue.set(state.paymentsList, index, obj)
+                    Vue.set(state.paymentsListIDS, index, obj.id)
+                }
+            })
+            // const newUnicObj = payload.filter(obj=>{
+            //     return state.paymentsListIDS.indexOf(obj.id) < 0
+            // });
+            // const unicIDS = newUnicObj.map(obj=>obj.id)
+            // state.paymentsListIDS.push(...unicIDS);
+            // state.paymentsList.push(...newUnicObj);
         },
         setCategories(state, payload) {
             if (!Array.isArray(payload)) {
@@ -222,24 +223,42 @@ export default new Vuex.Store({
             }
             state.categoryList.push(...payload)
         },
+        setLastId(state, payload){
+            state.lastId = payload;
+        }
     },
     actions: {
         fetchData({ commit }, page) {
             return new Promise((resolve) => {
                     setTimeout(() => {
-                        const items = localDB[`page${page}`]
+                        const items = localDB[`page${page}`];
                         resolve(items)
-                    }, 1000)
+                    }, 500)
                 })
                 .then(res => {
                     commit('setPaymentListData', res)
                 })
         },
+        fetchLastId({ commit }){
+            let i = 1;
+            let maxId = 0;
+                while(localDB[`page${i}`]){
+                    let el = localDB[`page${i}`];
+                    el.forEach(arr => {
+                        if(arr.id > maxId){
+                            maxId = arr.id;
+                        }
+                    });
+                    i++;
+                }
+            commit('setLastId', maxId);
+
+        },
         loadCategories({ commit }) {
             return new Promise((resolve) => {
                     setTimeout(() => {
                         resolve(['Food', 'Transport', 'Education', 'Entertainment'])
-                    }, 1000)
+                    }, 500)
                 })
                 .then(res => {
                     commit('setCategories', res)
@@ -250,10 +269,6 @@ export default new Vuex.Store({
             commit('setPaymentsListData', payload);
         },
 
-        loadPagination({ commit }, payload) {
-            commit('setPagination', payload);
-        }
-
     },
     getters: {
         getPaymentsList: state => state.paymentsList,
@@ -261,5 +276,6 @@ export default new Vuex.Store({
             return state.paymentsList.reduce((res, cur) => res + cur.value, 0)
         },
         getCategoryList: state => state.categoryList,
+        getLastId: state => state.lastId,
     }
 })

@@ -19,7 +19,7 @@
             <PaymentsDisplay :items="currentEl" />
             <pagination 
               @paginate="changePage" 
-              :length="30" 
+              :length="lenghtObjData" 
               :cur="page" 
               :n="count"/>
         </div>
@@ -58,6 +58,7 @@ export default {
   computed: {
     ...mapGetters({
       paymentList:'getPaymentsList',
+      lastId: 'getLastId'
     }),
     getFPV(){
       return this.$store.getters.getFullPaymentValue
@@ -65,6 +66,9 @@ export default {
     currentEl(){
       const {count, page} = this;
       return this.paymentList.slice(count*(page-1), count*(page-1)+count)
+    },
+    lenghtObjData(){
+      return this.lastId
     }
   },
   methods: {
@@ -72,21 +76,22 @@ export default {
       myMutationName: 'setPaymentsListData',
       addData: 'addPaymentListData'
       }),
-    addNewPayment(data) {
-      console.log(data);
-      this.addData(data);
-    },
+    // addNewPayment(data) {
+    //   this.addData(data);
+    //},
     openForm(){
-        const form = document.querySelector('.add');
-        const wrap = document.querySelector('.wrapper');
-        form.classList.add('active');
-        wrap.classList.add('show');
+        // const form = document.querySelector('.add');
+        // const wrap = document.querySelector('.wrapper');
+        // form.classList.add('active');
+        // wrap.classList.add('show');
+        this.$router.push({path: '/costs/add'})
     },
     closeForm(){
-        const form = document.querySelector('.add');
-        const wrap = document.querySelector('.wrapper');
-        form.classList.remove('active');
-        wrap.classList.remove('show');
+        // const form = document.querySelector('.add');
+        // const wrap = document.querySelector('.wrapper');
+        // form.classList.remove('active');
+        // wrap.classList.remove('show');
+        this.$router.push({path: '/costs'})
     },
     showForm(el){
         if(el == "ADD NEW COSTS +"){
@@ -107,9 +112,14 @@ export default {
     //this.paymentsList = this.fetchData();
     //this.myMutationName(this.fetchData())
     this.$store.dispatch('fetchData', this.page);
+    this.$store.dispatch('fetchLastId');
   },
   mounted () {
-
+    // Проверка открыта ли форма добавления при перезагрузке страницы
+    let formAdd = document.querySelector('.add');
+    if(formAdd){
+      this.btnadd = "CLOSE FORM"
+    }
   }
 
 };
@@ -143,6 +153,7 @@ export default {
       background-color: rgb(32, 175, 32);
       border-radius: 8px;
       cursor: pointer;
+      text-decoration: none;
       &:hover {
           background-color: green;
       }

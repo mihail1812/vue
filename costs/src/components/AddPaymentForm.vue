@@ -1,6 +1,6 @@
 <template>
   <div class="add">
-    <select-category class="add__input" v-model="category"/>
+    <select-category class="add__input" v-model="category" />
     <input class="add__input" placeholder="Date" v-model="date" />
     <input class="add__input" placeholder="Value" v-model="value" />
     <button class="add__btn" @click="onSaveClick">ADD +</button>
@@ -8,7 +8,8 @@
 </template>
 
 <script>
-import SelectCategory from './SelectCategory.vue';
+import SelectCategory from "./SelectCategory.vue";
+import { mapMutations, mapGetters } from "vuex";
 export default {
   components: { SelectCategory },
   data() {
@@ -19,6 +20,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({ getid: "getLastId" }),
     getCurrentDate() {
       const today = new Date();
       const d = today.getDate();
@@ -26,19 +28,57 @@ export default {
       const y = today.getFullYear();
       return `${d}.${m}.${y}`;
     },
+    getId() {
+      return this.getid;
+    },
   },
   methods: {
+    ...mapMutations(["addPaymentListData"]),
     onSaveClick() {
-      const data = {
-        category: this.category,
-        date: this.date || this.getCurrentDate,
-        value: Number(this.value),
-      };
-      this.$emit("addNewPayment", data);
-      this.category = "";
-      this.date = "";
-      this.value = "";
+      const data = [
+        {
+          id: this.getId + 1,
+          category: this.category,
+          date: this.date || this.getCurrentDate,
+          value: Number(this.value),
+        },
+      ];
+      this.$store.commit("addPaymentListData", data);
+      this.$store.commit("setLastId", data[0].id);
+      //this.category = "";
+      //this.date = "";
+      //this.value = "";
     },
+    quickAdd(obj){
+      console.log('qa', obj);
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    // console.log("enter");
+    // console.log(to, '1');
+    // console.log(from, '2');
+    // обрабатываем изменение параметров маршрута...
+    // не забываем вызвать next()
+    if (to.params.id) {
+      //console.log(to.params.id);
+      if (to.query.value) {
+        console.log(to.query.value);
+        next(obj =>{
+          //console.log('next',obj);
+          obj.category = obj.$route.params.id;
+          obj.value = obj.$route.query.value;
+          obj.onSaveClick();
+          obj.$router.push({path: '/costs/add'});
+        })
+      } else {
+        next(obj =>{
+          obj.category = obj.$route.params.id;
+        })
+      }
+    } else {
+      next()
+    }
+    //next();
   },
 };
 </script>
@@ -46,7 +86,7 @@ export default {
 <style lang="scss" scoped>
 .add {
   padding: 16px;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 8px;
   position: absolute;
   top: 50px;

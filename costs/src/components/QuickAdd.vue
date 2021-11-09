@@ -11,10 +11,10 @@ export default {
   name: "QuickAdd",
   methods: {
     quickAdd(cat, value){
-      this.$router.push({name: 'AddPaymentForm'})
-      console.log(cat, value);
+      this.$router.push({path: `/costs/add/${cat}?value=${value}`})
+
     }
-  }
+  },
 };
 </script>
 
