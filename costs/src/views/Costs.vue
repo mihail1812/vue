@@ -10,7 +10,7 @@
         <!-- <router-link class="costs__add-btn" to="costs/add">{{btnadd}}</router-link> -->
         <button class="costs__add-btn" @click="showForm(btnadd)">{{btnadd}}</button>
         <quick-add/>
-        <AddPaymentForm @addNewPayment="addNewPayment" />
+        <AddPaymentForm />
         
       </div>
       <router-view/>

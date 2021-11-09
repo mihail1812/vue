@@ -88,11 +88,11 @@ export default {
   padding: 16px;
   background-color: #fff;
   border-radius: 8px;
-  position: absolute;
-  top: 50px;
-  left: 100px;
-  display: none;
-  //display: flex;
+  // position: absolute;
+  // top: 50px;
+  // left: 100px;
+  //display: none;
+  display: flex;
   flex-direction: column;
   gap: 8px;
   width: 250px;
