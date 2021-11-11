@@ -225,6 +225,11 @@ export default new Vuex.Store({
         },
         setLastId(state, payload){
             state.lastId = payload;
+        },
+        //Удаление платежа из массива  платежей paymentsList
+        delItem(state, payload){
+            state.paymentsList.splice(payload-1, 1);
+            console.log('111');
         }
     },
     actions: {
@@ -268,6 +273,15 @@ export default new Vuex.Store({
             console.log(payload, '1');
             commit('setPaymentsListData', payload);
         },
+        delPayment({ commit }, {dispatch}, id){
+            commit('delItem', id);
+            dispatch('changeLastId');
+        },
+        changeLastId({commit},){
+            let len = this.getPaymentsList.length;
+            let newLastId = len + 1
+            commit('setLastId', newLastId)
+        }
 
     },
     getters: {
