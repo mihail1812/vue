@@ -6,8 +6,11 @@
       <router-link to="/costs">Costs</router-link>
     </div>
     <router-view/>
+    
   </div>
 </template>
+
+
 
 <style lang="scss">
 #app {

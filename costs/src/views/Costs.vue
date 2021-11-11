@@ -14,7 +14,7 @@
         >{{btnadd}}</button>
         <quick-add/>
         <!-- <AddPaymentForm @addNewPayment="addNewPayment" /> -->
-        
+
       </div>
       <router-view/>
       <div class="costs__box">
@@ -31,6 +31,7 @@
           {{paymentList}}
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -129,7 +130,6 @@ export default {
     }
   },
   updated(){
-    console.log('updated');
     let formAdd = document.querySelector('.add');
     if(formAdd){
       this.btnadd = "CLOSE FORM"
