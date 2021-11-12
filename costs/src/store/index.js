@@ -196,7 +196,8 @@ export default new Vuex.Store({
         paymentsList: [],
         paymentsListIDS: [],
         categoryList: [],
-        lastId: ''
+        lastId: '',
+        editPayment: {}
     },
     mutations: {
         setPaymentsListData(state, payload) {
@@ -230,6 +231,10 @@ export default new Vuex.Store({
         delItem(state, payload){
             state.paymentsList.splice(payload-1, 1);
             console.log('111');
+        },
+        // Копируем редактируемый платеж
+        setEditObj(state, payload){
+            state.editPayment = state.paymentsList[payload-1]
         }
     },
     actions: {
@@ -262,7 +267,7 @@ export default new Vuex.Store({
         loadCategories({ commit }) {
             return new Promise((resolve) => {
                     setTimeout(() => {
-                        resolve(['Food', 'Transport', 'Education', 'Entertainment'])
+                        resolve(['Food', 'Transport', 'Education', 'Entertaiment', 'Sport', 'Navigation'])
                     }, 500)
                 })
                 .then(res => {
@@ -291,5 +296,6 @@ export default new Vuex.Store({
         },
         getCategoryList: state => state.categoryList,
         getLastId: state => state.lastId,
+        getCurObj: state => state.editPayment,
     }
 })

@@ -16,7 +16,7 @@
         <div class="disp__item modal-position"
         >
           <img class="disp__img" src="../../public/img/dot.svg" alt="" @click="openModal(item.id)"/>
-          <modal :id="item.id" v-if="showId == item.id"/>
+          <modal v-if="showId == item.id"/>
         </div>
         
       </div>
@@ -26,6 +26,7 @@
 
 <script>
 import Modal from './Modal.vue';
+import { mapMutations } from 'vuex'
 export default {
   components: { Modal },
   name: "PaymentsDisplay",
@@ -41,12 +42,16 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({
+      addObj: 'setEditObj'
+    }),
     getKey() {
       this.i = this.i + 1;
       return this.i;
     },
     openModal(el){
-      this.$modal.show(el)
+      this.$modal.show(el);
+      this.addObj(el); //копируем выбранный платеж в отдельную ячейку
     },
     // Событие летит в плагин и назад по кругу))
     showModal(el){

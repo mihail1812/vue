@@ -1,16 +1,31 @@
 <template>
   <div class="modal">
-    <div class="modal__item" @click="editForm(id)">Edit</div>
+    <edit-form class="modal__edit" v-if="ifedit"/>
+    <div class="modal__item" @click="editForm(id)">{{btn}}</div>
     <div class="modal__item modal__item_red" @click="delItem(id)">Delete</div>
     <button class="modal__btn" @click="closeClick">Close</button>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters} from 'vuex'
+import EditForm from './EditForm.vue';
 export default {
+  name: "Modal",
+  components: { EditForm },
   props: {
     id: Number,
+  },
+  data() {
+    return {
+      ifedit: false,
+      btn: 'Edit',
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getObj: 'getCurObj'
+    })
   },
   methods: {
     ...mapActions({ delP: 'delPayment'}),
@@ -18,7 +33,14 @@ export default {
       this.$modal.hide();
     },
     editForm(id){
-      console.log(id, 'form');
+      console.log(id);
+      if (this.btn == 'Edit'){
+        this.ifedit = true;
+        this.btn = 'Save';
+      }else{
+        console.log('save');
+        this.$modal.hide();
+      }
     },
     delItem(id) {
         console.log(id, 'del');
@@ -31,6 +53,7 @@ export default {
 
 <style lang="scss" scoped>
 .modal {
+  z-index: 10;
   position: absolute;
   top: -6px;
   left: -115px;

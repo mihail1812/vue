@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <select class="select__input" :value="value" @change="onChange($event)">
+    <select class="select__input" @change="onChange($event)">
       <option
         v-for="(option, idx) in getCategoryList"
         :key="idx">
@@ -23,10 +23,13 @@ export default {
     return {
       selected: "",
       option: "Food",
+      selObj: '',
+      curVal: this.props.value
+
     };
   },
   computed: {
-    ...mapGetters(["getCategoryList"]),
+    ...mapGetters(["getCategoryList", "getCurObj"]),
   },
   methods: {
     ...mapActions(["loadCategories"]),
@@ -38,6 +41,10 @@ export default {
     if (!this.getCategoryList?.length) {
       this.loadCategories();
     }
+    this.selObj = document.querySelector('.select__input');
+    this.selObj.value = this.getCurObj.category;
+    console.log(this.getCurObj.category);
+
   },
 };
 </script>

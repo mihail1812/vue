@@ -16,7 +16,12 @@ export default {
       },
       hide() {
         this.EventBus.$emit('hide');
+      },
+      obj(obj){
+        return obj;
       }
+
+      
     }
   }
 }
