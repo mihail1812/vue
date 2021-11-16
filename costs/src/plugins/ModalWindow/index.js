@@ -14,6 +14,11 @@ export default {
         // вместе с событием передаем параметры из аргументов функции
         this.EventBus.$emit('shown', { id });
       },
+      //сщбытие сохранения формы
+      saveForm(){
+        this.EventBus.$emit('saveForm')
+      },
+      //
       hide() {
         this.EventBus.$emit('hide');
       },

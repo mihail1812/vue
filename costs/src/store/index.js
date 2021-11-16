@@ -230,11 +230,16 @@ export default new Vuex.Store({
         //Удаление платежа из массива  платежей paymentsList
         delItem(state, payload){
             state.paymentsList.splice(payload-1, 1);
+            state.paymentsListIDS.splice(payload-1, 1);
             console.log('111');
         },
         // Копируем редактируемый платеж
         setEditObj(state, payload){
             state.editPayment = state.paymentsList[payload-1]
+        },
+        // Сохраняем отредактированный платежей
+        saveCanges(state, payload){
+            Vue.set(state.paymentsList, payload.id-1, payload)
         }
     },
     actions: {

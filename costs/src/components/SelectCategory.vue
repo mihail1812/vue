@@ -24,7 +24,7 @@ export default {
       selected: "",
       option: "Food",
       selObj: '',
-      curVal: this.props.value
+      curVal: ''//this.props.value
 
     };
   },

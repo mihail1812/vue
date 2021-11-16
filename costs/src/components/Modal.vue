@@ -1,8 +1,8 @@
 <template>
   <div class="modal">
     <edit-form class="modal__edit" v-if="ifedit"/>
-    <div class="modal__item" @click="editForm(id)">{{btn}}</div>
-    <div class="modal__item modal__item_red" @click="delItem(id)">Delete</div>
+    <div class="modal__item" @click="editForm()">{{btn}}</div>
+    <div class="modal__item modal__item_red" @click="delItem(getObj.id)">Delete</div>
     <button class="modal__btn" @click="closeClick">Close</button>
   </div>
 </template>
@@ -32,18 +32,16 @@ export default {
     closeClick() {
       this.$modal.hide();
     },
-    editForm(id){
-      console.log(id);
+    editForm(){
       if (this.btn == 'Edit'){
         this.ifedit = true;
         this.btn = 'Save';
       }else{
-        console.log('save');
+        this.$modal.saveForm()
         this.$modal.hide();
       }
     },
     delItem(id) {
-        console.log(id, 'del');
         this.delP(id)
         this.$modal.hide();
     },
